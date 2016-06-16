@@ -2,7 +2,6 @@
 
 class ModelTest extends TestCase
 {
-
     public function tearDown()
     {
         User::truncate();
@@ -13,7 +12,7 @@ class ModelTest extends TestCase
 
     public function testNewModel()
     {
-        $user = new User;
+        $user = new User();
         $this->assertInstanceOf('Jenssegers\Mongodb\Eloquent\Model', $user);
         $this->assertInstanceOf('Jenssegers\Mongodb\Connection', $user->getConnection());
         $this->assertEquals(false, $user->exists);
@@ -23,7 +22,7 @@ class ModelTest extends TestCase
 
     public function testInsert()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -48,7 +47,7 @@ class ModelTest extends TestCase
 
     public function testUpdate()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -81,7 +80,7 @@ class ModelTest extends TestCase
 
     public function testManualStringId()
     {
-        $user = new User;
+        $user = new User();
         $user->_id = '4af9f23d8ead0e1d32000000';
         $user->name = 'John Doe';
         $user->title = 'admin';
@@ -94,7 +93,7 @@ class ModelTest extends TestCase
         $raw = $user->getAttributes();
         $this->assertInstanceOf('MongoDB\BSON\ObjectID', $raw['_id']);
 
-        $user = new User;
+        $user = new User();
         $user->_id = 'customId';
         $user->name = 'John Doe';
         $user->title = 'admin';
@@ -110,7 +109,7 @@ class ModelTest extends TestCase
 
     public function testManualIntId()
     {
-        $user = new User;
+        $user = new User();
         $user->_id = 1;
         $user->name = 'John Doe';
         $user->title = 'admin';
@@ -126,7 +125,7 @@ class ModelTest extends TestCase
 
     public function testDelete()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -142,13 +141,13 @@ class ModelTest extends TestCase
 
     public function testAll()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
         $user->save();
 
-        $user = new User;
+        $user = new User();
         $user->name = 'Jane Doe';
         $user->title = 'user';
         $user->age = 32;
@@ -163,7 +162,7 @@ class ModelTest extends TestCase
 
     public function testFind()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -237,7 +236,7 @@ class ModelTest extends TestCase
 
     public function testDestroy()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -250,7 +249,7 @@ class ModelTest extends TestCase
 
     public function testTouch()
     {
-        $user = new User;
+        $user = new User();
         $user->name = 'John Doe';
         $user->title = 'admin';
         $user->age = 35;
@@ -298,10 +297,10 @@ class ModelTest extends TestCase
 
     public function testPrimaryKey()
     {
-        $user = new User;
+        $user = new User();
         $this->assertEquals('_id', $user->getKeyName());
 
-        $book = new Book;
+        $book = new Book();
         $this->assertEquals('title', $book->getKeyName());
 
         $book->title = 'A Game of Thrones';
@@ -402,7 +401,7 @@ class ModelTest extends TestCase
         $user = User::create(['name' => 'Jane Doe', 'entry' => ['date' => '2005-08-08']]);
         $this->assertInstanceOf('Carbon\Carbon', $user->getAttribute('entry.date'));
 
-        $user->setAttribute('entry.date', new DateTime);
+        $user->setAttribute('entry.date', new DateTime());
         $this->assertInstanceOf('Carbon\Carbon', $user->getAttribute('entry.date'));
 
         $data = $user->toArray();

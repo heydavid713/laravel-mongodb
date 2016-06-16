@@ -1,4 +1,6 @@
-<?php namespace Jenssegers\Mongodb\Queue;
+<?php
+
+namespace Jenssegers\Mongodb\Queue;
 
 use Carbon\Carbon;
 use Illuminate\Queue\DatabaseQueue;
@@ -8,7 +10,8 @@ class MongoQueue extends DatabaseQueue
     /**
      * Get the next available job for the queue.
      *
-     * @param  string|null  $queue
+     * @param string|null $queue
+     *
      * @return \StdClass|null
      */
     protected function getNextAvailableJob($queue)
@@ -32,7 +35,8 @@ class MongoQueue extends DatabaseQueue
     /**
      * Release the jobs that have been reserved for too long.
      *
-     * @param  string  $queue
+     * @param string $queue
+     *
      * @return void
      */
     protected function releaseJobsThatHaveBeenReservedTooLong($queue)
@@ -49,11 +53,11 @@ class MongoQueue extends DatabaseQueue
             $this->releaseJob($job['_id'], $attempts);
         }
     }
-    
+
     /**
      * Release the given job ID from reservation.
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return void
      */
@@ -69,7 +73,8 @@ class MongoQueue extends DatabaseQueue
     /**
      * Mark the given job ID as reserved.
      *
-     * @param  string  $id
+     * @param string $id
+     *
      * @return void
      */
     protected function markJobAsReserved($id)
@@ -82,8 +87,9 @@ class MongoQueue extends DatabaseQueue
     /**
      * Delete a reserved job from the queue.
      *
-     * @param  string  $queue
-     * @param  string  $id
+     * @param string $queue
+     * @param string $id
+     *
      * @return void
      */
     public function deleteReserved($queue, $id)

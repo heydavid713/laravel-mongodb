@@ -1,8 +1,9 @@
-<?php namespace Jenssegers\Mongodb\Eloquent;
+<?php
+
+namespace Jenssegers\Mongodb\Eloquent;
 
 trait SoftDeletes
 {
-
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /**

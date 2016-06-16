@@ -1,4 +1,6 @@
-<?php namespace Jenssegers\Mongodb\Eloquent;
+<?php
+
+namespace Jenssegers\Mongodb\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -20,8 +22,9 @@ class Builder extends EloquentBuilder
     /**
      * Update a record in the database.
      *
-     * @param  array  $values
-     * @param  array  $options
+     * @param array $values
+     * @param array $options
+     *
      * @return int
      */
     public function update(array $values, array $options = [])
@@ -40,7 +43,8 @@ class Builder extends EloquentBuilder
     /**
      * Insert a new record into the database.
      *
-     * @param  array  $values
+     * @param array $values
+     *
      * @return bool
      */
     public function insert(array $values)
@@ -59,8 +63,9 @@ class Builder extends EloquentBuilder
     /**
      * Insert a new record and get the value of the primary key.
      *
-     * @param  array   $values
-     * @param  string  $sequence
+     * @param array  $values
+     * @param string $sequence
+     *
      * @return int
      */
     public function insertGetId(array $values, $sequence = null)
@@ -97,9 +102,10 @@ class Builder extends EloquentBuilder
     /**
      * Increment a column's value by a given amount.
      *
-     * @param  string  $column
-     * @param  int     $amount
-     * @param  array   $extra
+     * @param string $column
+     * @param int    $amount
+     * @param array  $extra
+     *
      * @return int
      */
     public function increment($column, $amount = 1, array $extra = [])
@@ -127,9 +133,10 @@ class Builder extends EloquentBuilder
     /**
      * Decrement a column's value by a given amount.
      *
-     * @param  string  $column
-     * @param  int     $amount
-     * @param  array   $extra
+     * @param string $column
+     * @param int    $amount
+     * @param array  $extra
+     *
      * @return int
      */
     public function decrement($column, $amount = 1, array $extra = [])
@@ -155,11 +162,12 @@ class Builder extends EloquentBuilder
     /**
      * Add the "has" condition where clause to the query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $hasQuery
-     * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
-     * @param  string  $operator
-     * @param  int  $count
-     * @param  string  $boolean
+     * @param \Illuminate\Database\Eloquent\Builder            $hasQuery
+     * @param \Illuminate\Database\Eloquent\Relations\Relation $relation
+     * @param string                                           $operator
+     * @param int                                              $count
+     * @param string                                           $boolean
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function addHasWhere(EloquentBuilder $hasQuery, Relation $relation, $operator, $count, $boolean)
@@ -207,7 +215,8 @@ class Builder extends EloquentBuilder
     /**
      * Create a raw database expression.
      *
-     * @param  closure  $expression
+     * @param closure $expression
+     *
      * @return mixed
      */
     public function raw($expression = null)
@@ -218,12 +227,14 @@ class Builder extends EloquentBuilder
         // Convert MongoCursor results to a collection of models.
         if ($results instanceof Cursor) {
             $results = iterator_to_array($results, false);
+
             return $this->model->hydrate($results);
         }
 
         // Convert Mongo BSONDocument to a single object.
         elseif ($results instanceof BSONDocument) {
             $results = $results->getArrayCopy();
+
             return $this->model->newFromBuilder((array) $results);
         }
 
