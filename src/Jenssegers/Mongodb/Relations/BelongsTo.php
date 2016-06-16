@@ -66,47 +66,47 @@ class BelongsTo extends \Illuminate\Database\Eloquent\Relations\BelongsTo
             return array_values(array_unique($keys));
         }
 
-/**
- * Match the eagerly loaded results to their parents.
- *
- * @param array                                    $models
- * @param \Illuminate\Database\Eloquent\Collection $results
- * @param string                                   $relation
- *
- * @return array
- */
-public function match(array $models, Collection $results, $relation)
-{
-    $foreign = $this->foreignKey;
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param array                                    $models
+         * @param \Illuminate\Database\Eloquent\Collection $results
+         * @param string                                   $relation
+         *
+         * @return array
+         */
+        public function match(array $models, \Illuminate\Database\Eloquent\Collection $results, $relation)
+        {
+            $foreign = $this->foreignKey;
 
-    $other = $this->otherKey;
+            $other = $this->otherKey;
 
-    // First we will get to build a dictionary of the child models by their primary
-    // key of the relationship, then we can easily match the children back onto
-    // the parents using that dictionary and the primary key of the children.
-    $dictionary = [];
+            // First we will get to build a dictionary of the child models by their primary
+            // key of the relationship, then we can easily match the children back onto
+            // the parents using that dictionary and the primary key of the children.
+            $dictionary = [];
 
-    foreach ($results as $result) {
-        $dictionary[$result->getAttribute($other)] = $result;
-    }
+            foreach ($results as $result) {
+                $dictionary[$result->getAttribute($other)] = $result;
+            }
 
-    // Once we have the dictionary constructed, we can loop through all the parents
-    // and match back onto their children using these keys of the dictionary and
-    // the primary key of the children to map them onto the correct instances.
-    foreach ($models as $model) {
-        if (is_array($model->$foreign)) {
-            foreach ($model->$foreign as $f) {
-                if (isset($dictionary[$model->$f])) {
-                    $model->setRelation($relation, $dictionary[$model->$f]);
+            // Once we have the dictionary constructed, we can loop through all the parents
+            // and match back onto their children using these keys of the dictionary and
+            // the primary key of the children to map them onto the correct instances.
+            foreach ($models as $model) {
+                if (is_array($model->$foreign)) {
+                    foreach ($model->$foreign as $f) {
+                        if (isset($dictionary[$model->$f])) {
+                            $model->setRelation($relation, $dictionary[$model->$f]);
+                        }
+                    }
+                } else {
+                    if (isset($dictionary[$model->$foreign])) {
+                        $model->setRelation($relation, $dictionary[$model->$foreign]);
+                    }
                 }
             }
-        } else {
-            if (isset($dictionary[$model->$foreign])) {
-                $model->setRelation($relation, $dictionary[$model->$foreign]);
-            }
-        }
-    }
 
-    return $models;
-}
+            return $models;
+        }
 }
