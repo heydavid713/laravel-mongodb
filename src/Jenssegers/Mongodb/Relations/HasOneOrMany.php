@@ -13,7 +13,6 @@ abstract class HasOneOrMany extends Illuminate\Database\Eloquent\Relations\HasOn
      */
     protected function buildDictionary(\Illuminate\Database\Eloquent\Collection $results)
     {
-        dd('maricone loco');
         $dictionary = [];
 
         $foreign = $this->getPlainForeignKey();
