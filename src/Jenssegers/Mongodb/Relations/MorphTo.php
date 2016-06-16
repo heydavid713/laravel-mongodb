@@ -1,4 +1,6 @@
-<?php namespace Jenssegers\Mongodb\Relations;
+<?php
+
+namespace Jenssegers\Mongodb\Relations;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo as EloquentMorphTo;
 
@@ -20,7 +22,8 @@ class MorphTo extends EloquentMorphTo
     /**
      * Get all of the relation results for a type.
      *
-     * @param  string  $type
+     * @param string $type
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function getResultsByType($type)

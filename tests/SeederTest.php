@@ -2,7 +2,6 @@
 
 class SeederTest extends TestCase
 {
-
     public function tearDown()
     {
         User::truncate();
@@ -10,7 +9,7 @@ class SeederTest extends TestCase
 
     public function testSeed()
     {
-        $seeder = new UserTableSeeder;
+        $seeder = new UserTableSeeder();
         $seeder->run();
 
         $user = User::where('name', 'John Doe')->first();
