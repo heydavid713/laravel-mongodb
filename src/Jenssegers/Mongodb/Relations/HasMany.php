@@ -50,10 +50,11 @@ class HasMany extends EloquentHasMany
         return $this->getForeignKey();
     }
 
-   /**
+  /**
    * Build model dictionary keyed by the relation's foreign key.
    *
    * @param  \Illuminate\Database\Eloquent\Collection  $results
+   *
    * @return array
    */
   protected function buildDictionary(\Illuminate\Database\Eloquent\Collection  $results)
@@ -66,16 +67,13 @@ class HasMany extends EloquentHasMany
       // relationship as this will allow us to quickly access all of the related
       // models without having to do nested looping which will be quite slow.
       foreach ($results as $result) {
-
-          if (is_array($result->{$foreign})){
-              array_map(function($r) use(&$dictionary,$result){
+          if (is_array($result->{$foreign})) {
+              array_map(function ($r) use (&$dictionary,$result) {
                   $dictionary[$r][] = $result;
-              },$result->{$foreign});
-          }
-          else{
+              }, $result->{$foreign});
+          } else {
               $dictionary[$result->{$foreign}][] = $result;
           }
-
       }
 
       return $dictionary;
