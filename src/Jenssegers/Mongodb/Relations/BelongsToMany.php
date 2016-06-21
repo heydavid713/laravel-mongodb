@@ -257,8 +257,12 @@ class BelongsToMany extends EloquentBelongsToMany
         $dictionary = [];
 
         foreach ($results as $result) {
-            foreach ($result->$foreign as $item) {
-                $dictionary[$item][] = $result;
+            if ($result->$foreign instanceof \Traversable) {
+                foreach ($result->$foreign as $item) {
+                    $dictionary[$item][] = $result;
+                }
+            } else {
+                $dictionary[$result->$foreign][] = $result;
             }
         }
 
