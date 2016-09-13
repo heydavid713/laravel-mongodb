@@ -2,10 +2,10 @@
 
 namespace Jenssegers\Mongodb\Auth;
 
-use Illuminate\Auth\Passwords\DatabaseTokenRepository as BaseDatabaseTokenRepository;
-use MongoDB\BSON\UTCDateTime;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Auth\Passwords\DatabaseTokenRepository as BaseDatabaseTokenRepository;
+use MongoDB\BSON\UTCDateTime;
 
 class DatabaseTokenRepository extends BaseDatabaseTokenRepository
 {

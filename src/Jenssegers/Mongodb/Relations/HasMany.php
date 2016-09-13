@@ -68,7 +68,7 @@ class HasMany extends EloquentHasMany
       // models without having to do nested looping which will be quite slow.
       foreach ($results as $result) {
           if (is_array($result->{$foreign})) {
-              array_map(function ($r) use (&$dictionary,$result) {
+              array_map(function ($r) use (&$dictionary, $result) {
                   $dictionary[$r][] = $result;
               }, $result->{$foreign});
           } else {
