@@ -4,6 +4,7 @@ namespace Jenssegers\Mongodb\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 use MongoDB\Driver\Cursor;
 use MongoDB\Model\BSONDocument;
 
@@ -15,7 +16,7 @@ class Builder extends EloquentBuilder
      * @var array
      */
     protected $passthru = [
-        'toSql', 'lists', 'insert', 'insertGetId', 'pluck',
+        'toSql', 'insert', 'insertGetId', 'pluck',
         'count', 'min', 'max', 'avg', 'sum', 'exists', 'push', 'pull',
     ];
 
@@ -175,7 +176,10 @@ class Builder extends EloquentBuilder
         $query = $hasQuery->getQuery();
 
         // Get the number of related objects for each possible parent.
-        $relationCount = array_count_values($query->lists($relation->getHasCompareKey()));
+        $relations = $query->pluck($relation->getHasCompareKey());
+        $relationCount = array_count_values(array_map(function ($id) {
+            return (string) $id; // Convert Back ObjectIds to Strings
+        }, is_array($relations) ? $relations : $relations->toArray()));
 
         // Remove unwanted related objects based on the operator and count.
         $relationCount = array_filter($relationCount, function ($counted) use ($count, $operator) {

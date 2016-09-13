@@ -44,12 +44,13 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify an index for the collection.
      *
-     * @param string|array $columns
-     * @param array        $options
-     *
+     * @param  string|array  $columns
+     * @param  array         $options
+     * @param  string  $name
+     * @param  string|null  $algorithm
      * @return Blueprint
      */
-    public function index($columns = null, $options = [])
+    public function index($columns = null, $name = null, $algorithm = null, $options = [])
     {
         $columns = $this->fluent($columns);
 
@@ -73,12 +74,13 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify the primary key(s) for the table.
      *
-     * @param string|array $columns
-     * @param array        $options
-     *
+     * @param  string|array  $columns
+     * @param  string  $name
+     * @param  string|null  $algorithm
+     * @param  array         $options
      * @return \Illuminate\Support\Fluent
      */
-    public function primary($columns = null, $options = [])
+    public function primary($columns = null, $name = null, $algorithm = null, $options = [])
     {
         return $this->unique($columns, $options);
     }
@@ -116,18 +118,19 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify a unique index for the collection.
      *
-     * @param string|array $columns
-     * @param array        $options
-     *
+     * @param  string|array  $columns
+     * @param  string  $name
+     * @param  string|null  $algorithm
+     * @param  array         $options
      * @return Blueprint
      */
-    public function unique($columns = null, $options = [])
+    public function unique($columns = null, $name = null, $algorithm = null, $options = [])
     {
         $columns = $this->fluent($columns);
 
         $options['unique'] = true;
 
-        $this->index($columns, $options);
+        $this->index($columns, null, null, $options);
 
         return $this;
     }
@@ -143,7 +146,7 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     {
         $columns = $this->fluent($columns);
 
-        $this->index($columns, ['background' => true]);
+        $this->index($columns, null, null, ['background' => true]);
 
         return $this;
     }
@@ -162,7 +165,7 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
 
         $options['sparse'] = true;
 
-        $this->index($columns, $options);
+        $this->index($columns, null, null, $options);
 
         return $this;
     }
@@ -180,7 +183,7 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     {
         $columns = $this->fluent($columns);
 
-        $this->index($columns, ['expireAfterSeconds' => $seconds]);
+        $this->index($columns, null, null, ['expireAfterSeconds' => $seconds]);
 
         return $this;
     }
@@ -222,6 +225,25 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     public function addColumn($type, $name, array $parameters = [])
     {
         $this->fluent($name);
+
+        return $this;
+    }
+
+    /**
+     * Specify a sparse and unique index for the collection.
+     *
+     * @param  string|array  $columns
+     * @param  array         $options
+     * @return Blueprint
+     */
+    public function sparse_and_unique($columns = null, $options = [])
+    {
+        $columns = $this->fluent($columns);
+
+        $options['sparse'] = true;
+        $options['unique'] = true;
+
+        $this->index($columns, null, null, $options);
 
         return $this;
     }

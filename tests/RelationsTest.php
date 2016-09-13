@@ -291,6 +291,18 @@ class RelationsTest extends TestCase
         $this->assertCount(2, $user->clients);
     }
 
+    public function testBelongsToManyAttachEloquentCollection()
+    {
+        $user = User::create(['name' => 'John Doe']);
+        $client1 = Client::create(['name' => 'Test 1']);
+        $client2 = Client::create(['name' => 'Test 2']);
+        $collection = new \Illuminate\Database\Eloquent\Collection([$client1, $client2]);
+
+        $user = User::where('name', '=', 'John Doe')->first();
+        $user->clients()->attach($collection);
+        $this->assertCount(2, $user->clients);
+    }
+
     public function testBelongsToManySyncAlreadyPresent()
     {
         $user = User::create(['name' => 'John Doe']);
@@ -322,8 +334,8 @@ class RelationsTest extends TestCase
         $this->assertTrue(array_key_exists('groups', $user->getAttributes()));
 
         // Assert they are attached
-        $this->assertTrue(in_array($group->_id, $user->groups));
-        $this->assertTrue(in_array($user->_id, $group->users));
+        $this->assertTrue(in_array($group->_id, $user->groups->pluck('_id')->toArray()));
+        $this->assertTrue(in_array($user->_id, $group->users->pluck('_id')->toArray()));
         $this->assertEquals($group->_id, $user->groups()->first()->_id);
         $this->assertEquals($user->_id, $group->users()->first()->_id);
     }
