@@ -3,8 +3,8 @@
 namespace Jenssegers\Mongodb;
 
 use Exception;
-use MongoDB\Collection as MongoCollection;
 use MongoDB\BSON\ObjectID;
+use MongoDB\Collection as MongoCollection;
 
 class Collection
 {
