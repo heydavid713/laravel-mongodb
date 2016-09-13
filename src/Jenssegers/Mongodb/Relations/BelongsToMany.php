@@ -185,6 +185,10 @@ class BelongsToMany extends EloquentBelongsToMany
             // Attach the new parent id to the related model.
             $model->push($this->foreignKey, $this->parent->getKey(), true);
         } else {
+            if ($id instanceof Collection) {
+                $id = $id->modelKeys();
+            }
+
             $query = $this->newRelatedQuery();
 
             $query->whereIn($this->related->getKeyName(), (array) $id);
@@ -297,5 +301,25 @@ class BelongsToMany extends EloquentBelongsToMany
     public function getForeignKey()
     {
         return $this->foreignKey;
+    }
+
+    /**
+     * Format the sync list so that it is keyed by ID. (Legacy Support)
+     * The original function has been renamed to formatRecordsList since Laravel 5.3
+     *
+     * @deprecated
+     * @param  array  $records
+     * @return array
+     */
+    protected function formatSyncList(array $records)
+    {
+        $results = [];
+        foreach ($records as $id => $attributes) {
+            if (! is_array($attributes)) {
+                list($id, $attributes) = [$attributes, []];
+            }
+            $results[$id] = $attributes;
+        }
+        return $results;
     }
 }

@@ -39,6 +39,7 @@ composer require jenssegers/mongodb
  5.0.x    | 2.1.x
  5.1.x    | 2.2.x or 3.0.x
  5.2.x    | 2.3.x or 3.0.x
+ 5.3.x    | 3.1.x
 
 And add the service provider in `config/app.php`:
 
@@ -103,7 +104,7 @@ $books = $user->books()->sortBy('title');
 Configuration
 -------------
 
-Change your default database connection name in `app/config/database.php`:
+Change your default database connection name in `config/database.php`:
 
 ```php
 'default' => env('DB_CONNECTION', 'mongodb'),
@@ -178,7 +179,7 @@ Everything else (should) work just like the original Eloquent model. Read more a
 
 ### Optional: Alias
 
-You may also register an alias for the MongoDB model by adding the following to the alias array in `app/config/app.php`:
+You may also register an alias for the MongoDB model by adding the following to the alias array in `config/app.php`:
 
 ```php
 'Moloquent'       => 'Jenssegers\Mongodb\Eloquent\Model',
@@ -259,6 +260,21 @@ If you want to use MongoDB as your database backend, change the the driver in `c
         'queue'  => 'default',
         'expire' => 60,
     ],
+```
+
+If you want to use MongoDB to handle failed jobs, change the database in `config/queue.php`:
+
+```php
+'failed' => [
+    'database' => 'mongodb',
+    'table'    => 'failed_jobs',
+    ],
+```
+
+And add the service provider in `config/app.php`: 
+
+```php
+Jenssegers\Mongodb\MongodbQueueServiceProvider::class,
 ```
 
 ### Sentry
@@ -620,7 +636,7 @@ class User extends Eloquent {
 
     public function groups()
     {
-        return $this->belongsToMany('Group', null, 'users', 'groups');
+        return $this->belongsToMany('Group', null, 'user_ids', 'group_ids');
     }
 
 }
