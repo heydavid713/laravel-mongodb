@@ -81,9 +81,9 @@ class Builder extends BaseBuilder
     ];
 
     /**
-     * Check if we need to return Collections instead of plain arrays (laravel >= 5.3 )
+     * Check if we need to return Collections instead of plain arrays (laravel >= 5.3 ).
      *
-     * @var boolean
+     * @var bool
      */
     protected $useCollections;
 
@@ -159,7 +159,8 @@ class Builder extends BaseBuilder
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return array|static[]|Collection
      */
     public function get($columns = [])
@@ -170,7 +171,8 @@ class Builder extends BaseBuilder
     /**
      * Execute the query as a fresh "select" statement.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return array|static[]|Collection
      */
     public function getFresh($columns = [])
@@ -332,6 +334,7 @@ class Builder extends BaseBuilder
 
             // Return results as an array with numeric keys
             $results = iterator_to_array($cursor, false);
+
             return $this->useCollections ? new Collection($results) : $results;
         }
     }
@@ -597,11 +600,13 @@ class Builder extends BaseBuilder
         if ($key == '_id') {
             $results = $results->map(function ($item) {
                 $item['_id'] = (string) $item['_id'];
+
                 return $item;
             });
         }
 
         $p = Arr::pluck($results, $column, $key);
+
         return $this->useCollections ? new Collection($p) : $p;
     }
 
@@ -653,8 +658,10 @@ class Builder extends BaseBuilder
      * Get an array with the values of a given column.
      *
      * @deprecated
-     * @param  string  $column
-     * @param  string  $key
+     *
+     * @param string $column
+     * @param string $key
+     *
      * @return array
      */
     public function lists($column, $key = null)

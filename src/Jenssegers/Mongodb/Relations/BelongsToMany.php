@@ -305,21 +305,24 @@ class BelongsToMany extends EloquentBelongsToMany
 
     /**
      * Format the sync list so that it is keyed by ID. (Legacy Support)
-     * The original function has been renamed to formatRecordsList since Laravel 5.3
+     * The original function has been renamed to formatRecordsList since Laravel 5.3.
      *
      * @deprecated
-     * @param  array  $records
+     *
+     * @param array $records
+     *
      * @return array
      */
     protected function formatSyncList(array $records)
     {
         $results = [];
         foreach ($records as $id => $attributes) {
-            if (! is_array($attributes)) {
+            if (!is_array($attributes)) {
                 list($id, $attributes) = [$attributes, []];
             }
             $results[$id] = $attributes;
         }
+
         return $results;
     }
 }

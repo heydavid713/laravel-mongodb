@@ -44,10 +44,11 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify an index for the collection.
      *
-     * @param  string|array  $columns
-     * @param  array         $options
-     * @param  string  $name
-     * @param  string|null  $algorithm
+     * @param string|array $columns
+     * @param array        $options
+     * @param string       $name
+     * @param string|null  $algorithm
+     *
      * @return Blueprint
      */
     public function index($columns = null, $name = null, $algorithm = null, $options = [])
@@ -74,10 +75,11 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify the primary key(s) for the table.
      *
-     * @param  string|array  $columns
-     * @param  string  $name
-     * @param  string|null  $algorithm
-     * @param  array         $options
+     * @param string|array $columns
+     * @param string       $name
+     * @param string|null  $algorithm
+     * @param array        $options
+     *
      * @return \Illuminate\Support\Fluent
      */
     public function primary($columns = null, $name = null, $algorithm = null, $options = [])
@@ -118,10 +120,11 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify a unique index for the collection.
      *
-     * @param  string|array  $columns
-     * @param  string  $name
-     * @param  string|null  $algorithm
-     * @param  array         $options
+     * @param string|array $columns
+     * @param string       $name
+     * @param string|null  $algorithm
+     * @param array        $options
+     *
      * @return Blueprint
      */
     public function unique($columns = null, $name = null, $algorithm = null, $options = [])
@@ -232,8 +235,9 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
     /**
      * Specify a sparse and unique index for the collection.
      *
-     * @param  string|array  $columns
-     * @param  array         $options
+     * @param string|array $columns
+     * @param array        $options
+     *
      * @return Blueprint
      */
     public function sparse_and_unique($columns = null, $options = [])
