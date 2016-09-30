@@ -1071,7 +1071,8 @@ class Builder extends BaseBuilder
     /**
      * Set custom options for the query.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return $this
      */
     public function options(array $options)
